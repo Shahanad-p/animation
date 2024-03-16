@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               TweenAnimationBuilder<double>(
+                curve: Curves.easeIn,
                 tween: Tween<double>(begin: 0, end: 1),
                 duration: Duration(seconds: 1),
                 builder: (BuildContext context, double value, Widget? child) {
