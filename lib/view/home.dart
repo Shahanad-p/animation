@@ -12,10 +12,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Activity> activityList = [];
+  GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   @override
   void initState() {
     super.initState();
-    activityList = [
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      addActivity();
+    });
+  }
+
+  void addActivity() {
+    List<Activity> activities = [
       Activity(
         name: 'New York City',
         location: 'America',
@@ -55,7 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
         price: 29500,
       ),
     ];
+    Future slideListItems = Future(() {});
+    for (var activity in activities) {
+      slideListItems = slideListItems.then((value) {
+        return Future.delayed(Duration(microseconds: 1500), () {
+          activityList.add(activity);
+          listKey.currentState!.insertItem(activityList.length - 1);
+        });
+      });
+    }
   }
+
+  Tween<Offset> offsetBuilder = Tween(begin: Offset(1, 0), end: Offset(0, 0));
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +113,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 20),
               Flexible(
-                child: ListView.builder(
-                  itemCount: activityList.length,
-                  itemBuilder: (context, index) {
-                    Activity activity = activityList[index];
-                    return buildCard(activity, context);
+                child: AnimatedList(
+                  key: listKey,
+                  initialItemCount: activityList.length,
+                  itemBuilder: (context, index, animation) {
+                    return SlideTransition(
+                      position: animation.drive(offsetBuilder),
+                      child: buildCard(activityList[index], context),
+                    );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -113,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
 Widget buildCard(Activity activity, context) {
   return Card(
     color: const Color.fromARGB(255, 212, 204, 204),
-    child: Container(
+    child: SizedBox(
       height: 100,
       child: Center(
         child: ListTile(
