@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_animation/controller/provider.dart';
+import 'package:the_animation/controller/home_provider.dart';
 import 'package:the_animation/model/activity_model.dart';
 import 'package:the_animation/view/details_screen.dart';
 import 'package:the_animation/view/gride_view.dart';
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<AllProvider>(context, listen: false);
+      final provider = Provider.of<HomeProvider>(context, listen: false);
       provider.addActivity();
     });
   }
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Consumer<AllProvider>(
+              Consumer<HomeProvider>(
                 builder: (context, value, child) => Flexible(
                   child: AnimatedList(
                     key: value.listKey,

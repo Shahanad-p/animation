@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_animation/controller/provider.dart';
+import 'package:the_animation/controller/login_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class LoginScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Consumer<AllProvider>(
+                child: Consumer<LoginProvider>(
                   builder: (context, value, child) => Column(
                     children: [
                       Text('Login',
