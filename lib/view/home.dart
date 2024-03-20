@@ -4,6 +4,7 @@ import 'package:the_animation/controller/provider.dart';
 import 'package:the_animation/model/activity_model.dart';
 import 'package:the_animation/view/details_screen.dart';
 import 'package:the_animation/view/gride_view.dart';
+import 'package:the_animation/view/implecite.dart';
 import 'package:the_animation/widgets/app_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,17 +32,34 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 65, 113, 152),
       appBar: AppBar(
-          title: Text('Activities', style: TextStyle(color: Colors.black)),
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => GridViewScreen()));
-            },
-            icon: Icon(Icons.apps),
-          )),
+        title: Text('Activities', style: TextStyle(color: Colors.black)),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => GridViewScreen()));
+          },
+          icon: Icon(
+            Icons.apps,
+            color: Colors.black,
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ImpleciteAnimation()));
+              },
+              icon: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ))
+        ],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),

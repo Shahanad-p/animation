@@ -17,8 +17,8 @@ class GridViewScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return AnimationConfiguration.staggeredGrid(
               position: index,
-              columnCount: 4,
-              duration: Duration(milliseconds: 3000),
+              columnCount: 3,
+              duration: Duration(milliseconds: 1500),
               child: ScaleAnimation(
                 child: FadeInAnimation(
                   child: Padding(

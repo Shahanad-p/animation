@@ -17,24 +17,25 @@ class _ImpleciteAnimationState extends State<ImpleciteAnimation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent),
-      body: AnimatedContainer(
-        height: height,
-        width: width,
-        duration: Duration(seconds: 1),
-        margin: EdgeInsets.all(margin),
-        color: color,
-        child: Center(
-          child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  margin = 50;
-                  height = 250;
-                  width = 250;
-                  color = Colors.red;
-                });
-              },
-              child: Text('Animated')),
+      body: Center(
+        child: AnimatedContainer(
+          height: height,
+          width: width,
+          duration: Duration(seconds: 1),
+          margin: EdgeInsets.all(margin),
+          color: color,
+          child: Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    margin = 50;
+                    height = 250;
+                    width = 250;
+                    color = Colors.red;
+                  });
+                },
+                child: Text('Animated')),
+          ),
         ),
       ),
     );
