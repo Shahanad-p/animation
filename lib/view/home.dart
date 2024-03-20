@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_animation/controller/provider.dart';
 import 'package:the_animation/model/activity_model.dart';
 import 'package:the_animation/view/details_screen.dart';
+import 'package:the_animation/view/gride_view.dart';
 import 'package:the_animation/widgets/app_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,67 +14,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Activity> activityList = [];
-  GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      addActivity();
+      final provider = Provider.of<AllProvider>(context, listen: false);
+      provider.addActivity();
     });
-  }
-
-  void addActivity() {
-    List<Activity> activities = [
-      Activity(
-        name: 'New York City',
-        location: 'America',
-        imageUrl:
-            'assets/beautiful-view-empire-states-skyscrapers-new-york-city.jpg',
-        price: 25000,
-      ),
-      Activity(
-        name: 'Bangkok Thailand City',
-        location: 'Bangkok',
-        imageUrl:
-            'assets/view-from-rooftop-china-town-middle-city-bangkok-thailand.jpg',
-        price: 26700,
-      ),
-      Activity(
-        name: 'Maldives Island',
-        location: 'South Asia',
-        imageUrl: 'assets/maldives-island.jpg',
-        price: 28500,
-      ),
-      Activity(
-        name: 'Pyrenees Mountain',
-        location: 'France and Spain',
-        imageUrl: 'assets/pyrenees-mountain-landscape-with-village.jpg',
-        price: 31500,
-      ),
-      Activity(
-        name: 'Ko sichang island',
-        location: 'Thailand',
-        imageUrl: 'assets/aerial-view-cottage-si-chang-island-thailand.jpg',
-        price: 30500,
-      ),
-      Activity(
-        name: 'Yixing sunset',
-        location: 'Wuxi jiangsu china',
-        imageUrl: 'assets/landscape-with-sunset-yixing.jpg',
-        price: 29500,
-      ),
-    ];
-    Future slideListItems = Future(() {});
-    for (var activity in activities) {
-      slideListItems = slideListItems.then((value) {
-        return Future.delayed(Duration(microseconds: 1500), () {
-          activityList.add(activity);
-          listKey.currentState!.insertItem(activityList.length - 1);
-        });
-      });
-    }
   }
 
   Tween<Offset> offsetBuilder = Tween(begin: Offset(1, 0), end: Offset(0, 0));
@@ -81,11 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 65, 113, 152),
       appBar: AppBar(
-        title: Text('Activities', style: TextStyle(color: Colors.black)),
-        elevation: 0,
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-      ),
+          title: Text('Activities', style: TextStyle(color: Colors.black)),
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => GridViewScreen()));
+            },
+            icon: Icon(Icons.apps),
+          )),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -112,16 +68,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Flexible(
-                child: AnimatedList(
-                  key: listKey,
-                  initialItemCount: activityList.length,
-                  itemBuilder: (context, index, animation) {
-                    return SlideTransition(
-                      position: animation.drive(offsetBuilder),
-                      child: buildCard(activityList[index], context),
-                    );
-                  },
+              Consumer<AllProvider>(
+                builder: (context, value, child) => Flexible(
+                  child: AnimatedList(
+                    key: value.listKey,
+                    initialItemCount: value.activityList.length,
+                    itemBuilder: (context, index, animation) {
+                      return SlideTransition(
+                        position: animation.drive(offsetBuilder),
+                        child: buildCard(value.activityList[index], context),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
