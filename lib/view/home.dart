@@ -126,7 +126,7 @@ Widget buildCard(Activity activity, context) {
             );
           },
           leading: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.10),
             child: Hero(
               tag: 'imageUrl${activity.imageUrl}',
               child: Image.asset(

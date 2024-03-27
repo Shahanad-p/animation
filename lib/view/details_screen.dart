@@ -21,8 +21,8 @@ class DetailScreen extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15)),
+                  bottomLeft: Radius.circular(15.10),
+                  bottomRight: Radius.circular(15.10)),
               child: Hero(
                 tag: 'imageUrl${activity.imageUrl}',
                 child: Image.asset(

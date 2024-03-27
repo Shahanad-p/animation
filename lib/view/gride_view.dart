@@ -23,7 +23,7 @@ class GridViewScreen extends StatelessWidget {
               child: ScaleAnimation(
                 child: FadeInAnimation(
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8.10),
                     child: Container(
                       height: 200,
                       width: 200,
